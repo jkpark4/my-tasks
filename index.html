@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyTodo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">MyTodo</h1>
+      <div class="header-right">
+        <button id="export-btn" class="tool-btn" title="JSON으로 내보내기">내보내기</button>
+        <button id="import-btn" class="tool-btn" title="JSON 가져오기">가져오기</button>
+        <input type="file" id="import-file" accept=".json">
+        <span class="badge-remaining hidden" id="badge-remaining">0개 남음</span>
+        <span class="date" id="current-date"></span>
+        <label class="theme-toggle" aria-label="다크 모드 전환">
+          <input type="checkbox" id="theme-toggle-input">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+        </label>
+      </div>
+    </header>
+
+    <section class="dashboard">
+      <div class="dashboard-main">
+        <div class="dashboard-header">
+          <span class="dashboard-title">전체 진행률</span>
+          <span class="progress-text" id="progress-text">0/0 완료 (0%)</span>
+        </div>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-cats">
+        <div class="cat-stat">
+          <span class="cat-stat-name cat-work-text">업무</span>
+          <div class="mini-bar-wrapper">
+            <div class="mini-bar mini-bar-work" id="bar-work"></div>
+          </div>
+          <span class="cat-stat-count" id="count-work">0/0</span>
+        </div>
+        <div class="cat-stat">
+          <span class="cat-stat-name cat-personal-text">개인</span>
+          <div class="mini-bar-wrapper">
+            <div class="mini-bar mini-bar-personal" id="bar-personal"></div>
+          </div>
+          <span class="cat-stat-count" id="count-personal">0/0</span>
+        </div>
+        <div class="cat-stat">
+          <span class="cat-stat-name cat-study-text">공부</span>
+          <div class="mini-bar-wrapper">
+            <div class="mini-bar mini-bar-study" id="bar-study"></div>
+          </div>
+          <span class="cat-stat-count" id="count-study">0/0</span>
+        </div>
+        <div class="cat-stat today-stat">
+          <span class="cat-stat-name">오늘 추가</span>
+          <span class="cat-stat-count today-count" id="today-count">0개</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="filter-bar">
+      <section class="filter-section">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="work">업무</button>
+        <button class="filter-btn" data-filter="personal">개인</button>
+        <button class="filter-btn" data-filter="study">공부</button>
+      </section>
+      <div class="filter-controls">
+        <select id="sort-select" class="sort-select">
+          <option value="createdAt-desc">최신순</option>
+          <option value="createdAt-asc">오래된순</option>
+          <option value="category">카테고리순</option>
+          <option value="completed">미완료 우선</option>
+          <option value="manual">수동 정렬</option>
+        </select>
+        <button id="clear-completed-btn" class="clear-completed-btn hidden">완료 삭제</button>
+      </div>
+    </div>
+
+    <div class="search-section">
+      <input type="text" id="search-input" placeholder="🔍  할 일 검색..." autocomplete="off">
+      <button id="search-clear" class="search-clear hidden" aria-label="검색 초기화">✕</button>
+    </div>
+
+    <section class="input-section">
+      <input type="text" id="todo-input" placeholder="새 할 일 입력..." autocomplete="off">
+      <select id="category-select">
+        <option value="personal">개인</option>
+        <option value="work">업무</option>
+        <option value="study">공부</option>
+      </select>
+      <button id="add-btn">추가</button>
+    </section>
+    <p class="error-msg hidden" id="error-msg">할 일 내용을 입력해 주세요.</p>
+
+    <div class="empty-state hidden" id="empty-state">
+      <p>할 일이 없습니다. 추가해보세요!</p>
+    </div>
+
+    <ul class="todo-list" id="todo-list"></ul>
+  </div>
+
+  <div class="celebration hidden" id="celebration">🎉 모든 할 일을 완료했습니다!</div>
+
+  <div class="overlay hidden" id="overlay"></div>
+  <div class="dialog hidden" id="delete-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-msg">
+    <p id="dialog-msg">이 할 일을 삭제할까요?</p>
+    <div class="dialog-btns">
+      <button id="confirm-delete">삭제</button>
+      <button id="cancel-delete">취소</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
